@@ -20,6 +20,11 @@ Fuente de verdad de mis skills personales de Claude Code. Los directorios en
 | product-owner | Roadmaps, backlog SCRUM, specs técnicas, ADRs |
 | tech-proposals | Propuestas comerciales B2B, pricing COP/USD, Word/PDF |
 | content-automation | Contenido con IA + distribución n8n (embudo WhatsApp de Vantedge) |
+| director-video-ia | Producción de video con IA: brief, guion técnico, prompts por etiquetas, modelo por toma, QA de texto y postproducción |
+| pc-optimizer | Diagnóstico y optimización de PCs Windows (hardware, memoria, disco, cachés de desarrollo) |
+| selector-modelo | Decide qué modelo de Claude usar por tarea (Haiku, Sonnet, Opus, Fable) en desarrollo y video, según riesgo y cupo del plan |
+| auditor-video-ia | Auditoría independiente de video con IA: riesgos antes de gastar créditos, revisión cuadro a cuadro después y bitácora de aprendizaje |
+| vantedge-contenido | Estados de WhatsApp, posts y reels de Vantedge: marca, voz, formato 1080×1920 y reglas de publicación |
 
 ## Plugins (no se duplican en este repo)
 
@@ -33,4 +38,5 @@ Fuente de verdad de mis skills personales de Claude Code. Los directorios en
 - Cada skill: `SKILL.md` con frontmatter YAML (`name`, `description` con
   triggers) + `references/` para material extenso.
 - Idioma: español; identificadores y comandos en su forma original.
-- Commits: Conventional Commits en inglés, sin firma de Claude.
+- Commits: Conventional Commits en español, sin firma de Claude.
+- `git-hooks/commit-msg` quita la firma de IA de los commits; instalar con `git-hooks/instalar-hook-commit.ps1`.

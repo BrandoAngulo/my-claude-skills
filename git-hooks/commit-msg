@@ -1,0 +1,29 @@
+#!/bin/sh
+# commit-msg (marca: hook-sin-atribucion-ia)
+# Quita del mensaje de commit las líneas de atribución a Claude / asistentes de IA:
+#   Co-Authored-By: ... Claude / Anthropic
+#   Claude-Session: ...
+#   Generated with [Claude Code] ...  y el enlace https://claude.ai/code/session_...
+# No bloquea el commit: limpia el mensaje y avisa.
+
+f="$1"
+patron='^co-authored-by:.*(claude|anthropic)|^claude-session:|generated with \[?claude code|^https://claude\.ai/code/session_'
+
+if grep -qiE "$patron" "$f"; then
+    sed -i -E \
+        -e '/^[Cc][Oo]-[Aa][Uu][Tt][Hh][Oo][Rr][Ee][Dd]-[Bb][Yy]:.*([Cc]laude|[Aa]nthropic)/d' \
+        -e '/^[Cc]laude-[Ss]ession:/d' \
+        -e '/[Gg]enerated with \[?[Cc]laude [Cc]ode/d' \
+        -e '/^https:\/\/claude\.ai\/code\/session_/d' \
+        "$f"
+    # Quitar líneas en blanco sobrantes al final del mensaje
+    sed -i -e ':a' -e '/^[[:space:]]*$/{$d;N;ba' -e '}' "$f"
+    echo "commit-msg: se quitaron líneas de atribución a IA del mensaje." >&2
+fi
+
+# Si el repo tenía su propio commit-msg antes de instalar este, se ejecuta también.
+previo="$(dirname "$0")/commit-msg.previo"
+if [ -x "$previo" ]; then
+    exec "$previo" "$@"
+fi
+exit 0

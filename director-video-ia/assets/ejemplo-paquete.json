@@ -1,0 +1,112 @@
+{
+  "version": "1.0",
+  "proyecto": {
+    "cliente": "Ferretería El Tornillo",
+    "vertical": "ferreteria",
+    "objetivo": "Que el cliente escriba por WhatsApp para pedir el taladro",
+    "dolor": "Herramientas baratas que se dañan a mitad del trabajo",
+    "plataforma": "reels",
+    "aspect_ratio": "9:16",
+    "duracion_total_s": 15,
+    "idioma": "es-CO"
+  },
+  "direccion_visual": {
+    "sensacion": ["potencia", "confianza", "oficio"],
+    "paleta_hex": ["#1C1C1C", "#E8A33D", "#C9C2B6"],
+    "texturas": ["madera cruda", "aserrín", "metal cepillado"],
+    "luz": "Lateral dura de ventana, tarde, polvo visible en el haz",
+    "estilo": "Comercial cinematográfico fotorrealista"
+  },
+  "guion": {
+    "narrativo": "Gancho con broca barata que se parte; el taladro del cliente perfora concreto sin esfuerzo; cierre con el producto heroico y CTA a WhatsApp.",
+    "dialogos": []
+  },
+  "assets": [
+    {
+      "id": "obj_taladro",
+      "tipo": "objeto",
+      "nombre": "Taladro inalámbrico del cliente",
+      "fuente": "foto_real",
+      "prompt_imagen": null,
+      "prompt_sheet": null
+    },
+    {
+      "id": "env_taller",
+      "tipo": "entorno",
+      "nombre": "Taller de carpintería",
+      "fuente": "generar",
+      "prompt_imagen": "Taller de carpintería pequeño, banco de madera cruda con aserrín, herramientas colgadas al fondo desenfocadas, luz lateral dura de ventana al atardecer, polvo flotando en el haz, fotorrealista, sin texto ni marcas.",
+      "prompt_sheet": null
+    }
+  ],
+  "tomas": [
+    {
+      "n": 1,
+      "duracion_s": 4,
+      "plano": "detalle",
+      "angulo": "normal",
+      "camara": "fija, cámara lenta",
+      "accion": "Una broca genérica se parte al perforar concreto",
+      "metodo": "broll",
+      "referencias": ["env_taller"],
+      "prompt_first_frame": "Plano detalle de una broca metálica genérica clavada en un bloque de concreto, chispas mínimas, luz lateral dura, fondo de taller desenfocado, fotorrealista, sin texto.",
+      "modelo": {
+        "principal": "Modelo más económico disponible en 720p",
+        "alternativa": "Kling 3.0",
+        "razon": "B-roll sin personaje: prioriza costo"
+      },
+      "prompt_video": {
+        "character": null,
+        "environment": "Taller, concreto, polvo en el aire, luz de tarde",
+        "storyline": "La broca gira, vibra y se parte en dos; el fragmento cae en cámara lenta.",
+        "aesthetic": "Cinematográfico, contraste alto, cámara fija en cámara lenta. Paleta #1C1C1C, #E8A33D.",
+        "action_sequence": [],
+        "negative": ["text", "logos", "watermark", "hands", "people", "music"]
+      },
+      "audio": {"dialogo": null, "sfx": "chirrido metálico y crujido", "musica_del_modelo": false},
+      "resolucion_prueba": "720p",
+      "resolucion_final": "1080p",
+      "qa_puntos_criticos": ["la broca no debe tener marca visible", "sin texto fantasma"]
+    },
+    {
+      "n": 2,
+      "duracion_s": 5,
+      "plano": "medio a detalle",
+      "angulo": "normal",
+      "camara": "dolly in lento hacia el mandril",
+      "accion": "El taladro del cliente reposa en el banco y su mandril gira",
+      "metodo": "img2video",
+      "referencias": ["obj_taladro", "env_taller"],
+      "prompt_first_frame": "Usando la foto del taladro como referencia exacta de forma y color, el taladro reposa sobre el banco de madera con aserrín, plano medio, luz lateral dura de tarde, polvo en el haz, fotorrealista, sin texto ni logos añadidos.",
+      "modelo": {
+        "principal": "Veo 3.1",
+        "alternativa": "Seedance 2.0",
+        "razon": "Toma heroica de producto: máxima fidelidad y calidad de luz"
+      },
+      "prompt_video": {
+        "character": null,
+        "environment": "El mismo taller del first frame",
+        "storyline": "La luz se intensifica sobre el mandril mientras el aserrín flota; el mandril gira dos vueltas y se detiene.",
+        "aesthetic": "Comercial cinematográfico, contraste alto. Dolly in lento de plano medio a detalle del mandril. Paleta #1C1C1C, #E8A33D, #C9C2B6.",
+        "action_sequence": [],
+        "negative": ["text", "logos", "watermark", "hands", "people", "music"]
+      },
+      "audio": {"dialogo": null, "sfx": "zumbido corto del motor", "musica_del_modelo": false},
+      "resolucion_prueba": "720p",
+      "resolucion_final": "1080p",
+      "qa_puntos_criticos": ["forma y color del taladro idénticos a la foto", "sin texto fantasma en la carcasa"]
+    }
+  ],
+  "postproduccion": {
+    "orden_montaje": [1, 2],
+    "musica_prompt": "Instrumental, percusión industrial con bajo potente, tensión que resuelve, 15 s, sin voces",
+    "capa_texto": [
+      {"toma": 1, "texto": "¿Otra broca partida?", "tipo": "subtitulo"},
+      {"toma": 2, "texto": "Pídelo por WhatsApp", "tipo": "cta"},
+      {"toma": 2, "texto": "logo del cliente", "tipo": "logo"}
+    ],
+    "lut_o_color": "LUT vertical ferretería"
+  },
+  "supuestos": ["Sin personaje: el producto es el protagonista", "Duración 15 s para Reels"],
+  "pendientes_aprobacion": ["Aprobar imagen de entorno", "Aprobar first frames de tomas 1 y 2 antes de generar video"]
+}

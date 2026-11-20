@@ -33,6 +33,11 @@ Preguntar lo que falte — una propuesta sin esto es un tiro al aire:
 3. **Quién decide y quién usa**: no siempre es la misma persona.
 4. **Urgencia real**: ¿hay fecha límite externa? (temporada, auditoría).
 5. **Señal de presupuesto**: si no la hay, ofrecer rangos por fases lo resuelve.
+6. **Tipo de cliente y relación**: ¿nuevo, recurrente, referido, familiar o
+   amigo? ¿Cómo trabaja: detallista, delega, regatea? ¿Qué valor estratégico
+   tiene (caso de éxito, referidos, ingreso recurrente)? Cambia el precio y,
+   sobre todo, las condiciones (ver "Ajustes según el tipo de cliente" en
+   `references/pricing-condiciones.md`).
 
 ---
 
@@ -90,26 +95,52 @@ Orden fijo (plantilla completa en `references/plantilla-propuesta.md`):
 
 ## Generar Word / PDF
 
-La propuesta se escribe en Markdown y se convierte con pandoc:
+La propuesta se escribe en Markdown y se convierte con pandoc. Si `pandoc` no
+está instalado, se usa el que trae Quarto (`quarto pandoc`, mismos argumentos):
 
 ```powershell
-# Word (con plantilla de estilos si existe)
-pandoc propuesta.md -o propuesta-cliente.docx --reference-doc=plantilla-vantedge.docx
+function Invoke-Pandoc {
+  if (Get-Command pandoc -ErrorAction SilentlyContinue) { pandoc @args } else { quarto pandoc @args }
+}
+$plantilla = "$env:USERPROFILE\.claude\skills\tech-proposals\assets\plantilla-vantedge.docx"
 
-# Word simple
-pandoc propuesta.md -o propuesta-cliente.docx
+# Word con los estilos de Vantedge
+Invoke-Pandoc propuesta.md -o Propuesta-<Cliente>-<YYYY-MM>.docx --reference-doc=$plantilla
 
-# PDF (requiere un motor; wkhtmltopdf o typst como alternativas a LaTeX)
-pandoc propuesta.md -o propuesta-cliente.pdf
+# Word simple (sin plantilla)
+Invoke-Pandoc propuesta.md -o Propuesta-<Cliente>-<YYYY-MM>.docx
 ```
 
-- `plantilla-vantedge.docx`: un .docx con los estilos de marca (tipografías,
-  colores de títulos) — pandoc copia los estilos, no el contenido. Se crea
-  una vez y se reutiliza.
+**PDF:** exportar el .docx con Word, para que el PDF se vea idéntico al Word:
+
+```powershell
+$w = New-Object -ComObject Word.Application
+try {
+  $d = $w.Documents.Open("$PWD\Propuesta-<Cliente>-<YYYY-MM>.docx", $false, $true)
+  $d.ExportAsFixedFormat("$PWD\Propuesta-<Cliente>-<YYYY-MM>.pdf", 17)  # 17 = PDF
+  $d.Close($false)
+} finally { $w.Quit() }
+```
+
+Sin Word, typst (incluido en Quarto) genera un PDF correcto pero sin los
+estilos de la plantilla:
+
+```powershell
+Invoke-Pandoc propuesta.md -s -t typst -o propuesta.typ
+quarto typst compile propuesta.typ Propuesta-<Cliente>-<YYYY-MM>.pdf
+```
+
+- `assets/plantilla-vantedge.docx`: estilos de marca (títulos oscuros con línea
+  verde azulado, tablas con bordes suaves y encabezado sombreado, tipografía
+  Aptos). Pandoc copia los estilos, no el contenido. Para cambiarla, editar en
+  Word los estilos Título, Subtítulo, Título 2, Título 3, Texto independiente
+  y Table, y guardar.
+- No usar `---` como separador en el cuerpo: los Título 2 de la plantilla ya
+  llevan línea inferior y en Word se ven dobles.
 - Nombre del archivo: `Propuesta-<Cliente>-<YYYY-MM>.docx` — sin "v1",
   "final", "FINAL2".
-- Revisar el .docx antes de enviar: tablas anchas y saltos de página son lo
-  que más se rompe.
+- Revisar el PDF exportado antes de enviar: tablas anchas y saltos de página
+  son lo que más se rompe.
 
 ---
 
@@ -117,3 +148,4 @@ pandoc propuesta.md -o propuesta-cliente.pdf
 
 - `references/plantilla-propuesta.md` — plantilla completa con ejemplos del dominio Vantedge
 - `references/pricing-condiciones.md` — modelos de cobro, moneda COP/USD, condiciones, señales de alerta
+- `assets/plantilla-vantedge.docx` — plantilla de estilos para el Word (`--reference-doc`)

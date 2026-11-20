@@ -86,6 +86,17 @@ real, es un señuelo y el cliente lo nota.
 | Pausa por no pago | "Hitos de pago vencidos >10 días hábiles pausan el desarrollo" |
 | Vigencia | "Propuesta válida por 15 días calendario" |
 
+## Ajustes según el tipo de cliente
+
+| Tipo | Precio | Condiciones |
+|---|---|---|
+| **Familiar o amigo** | Precio de lista + descuento visible (10-20%) con contraprestación. Nunca bajar la lista en silencio: se vuelve el piso de todo lo que venga. | Contrato, anticipo e hitos iguales a cualquier cliente. Presentar las condiciones en persona antes de enviar el documento. |
+| **Detallista / exigente** | No bajar el precio: las revisiones consumen más horas. | Un solo interlocutor que aprueba; observaciones en una lista consolidada por ronda; boceto aprobado antes de construir; acta de entrega por fase; reporte semanal corto. |
+| **Estratégico** (caso de éxito, referidos, recurrencia) | Descuento "cliente fundador" solo en la opción Recomendada y la Completa, para empujar la que conviene. | A cambio: firma dentro de la vigencia, pagos a tiempo, permiso para publicar el caso (sin datos sensibles), testimonio y referidos. El mantenimiento va a precio normal: es el ingreso recurrente. |
+
+Los tipos se combinan (familiar + detallista + estratégico): se aplica el
+descuento de uno y las condiciones de todos.
+
 ## Señales de alerta (clientes que salen caros)
 
 - Regatea el anticipo o propone "pagar todo al final" → no iniciar.
